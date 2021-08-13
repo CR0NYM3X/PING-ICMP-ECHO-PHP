@@ -1,7 +1,7 @@
 # PING PHP
 
 ## DATAGRAMA ICMP(8)
-![datagramaICMP](img/datagrama.PNG)
+![datagramaICMP](img/datagrama1.PNG)
 
 Código Valor <br>
 0 Net unreachable<br>
