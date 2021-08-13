@@ -202,8 +202,11 @@ function getLastIcmpError()
 
 
 
+echo  "------>".ord('J')."<-----\n";
 
-ping("8.8.8.8",.5);
+ping3("8.8.8.8",.5);
+
+
 
 
 
