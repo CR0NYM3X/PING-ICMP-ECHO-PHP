@@ -3,10 +3,10 @@
 ## DATAGRAMA ICMP(8)
 ![datagramaICMP](img/datagrama1.PNG)
 
-Tipo - Tipo de ICMP como se especifica a continuación.<br>
-Código - Subtipo al tipo dado.<br>
-Checksum - Datos comprobación de errores. Calculado a partir de la cabecera ICMP + datos, con un valor de 0 para este campo. El algoritmo de suma de comprobación se especifica en RFC 1071.<br>
-Resto del Header - Cuatro campo byte. Puede variar en función del tipo y código ICMP.<br>
+**Tipo**      - Tipo de ICMP como se especifica a continuación.<br>
+**Código**    - Subtipo al tipo dado.<br>
+**Checksum**  - Datos comprobación de errores. Calculado a partir de la cabecera ICMP + datos, con un valor de 0 para este campo. El algoritmo de suma de comprobación se especifica en RFC 1071.<br>
+**Resto del Header** - Cuatro campo byte. Puede variar en función del tipo y código ICMP.<br>
 
 
 Código Valor <br>
