@@ -54,6 +54,7 @@ function ping($host)
 #opcion #2 ping
 function ping2($host, $timeout = 1) {
                 /* ICMP ping packet with a pre-calculated checksum */
+
                 $package = "\x08\x00\x7d\x4b\x00\x00\x00\x00PingHost";
                 $socket  = socket_create(AF_INET, SOCK_RAW, 1);
                 socket_set_option($socket, SOL_SOCKET, SO_RCVTIMEO, array('sec' => $timeout, 'usec' => 0));
@@ -73,6 +74,17 @@ function ping2($host, $timeout = 1) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 /// https://www.php.net/manual/es/function.socket-create.php
 
 $g_icmp_error = "No Error";
@@ -87,37 +99,60 @@ function ping3($host, $timeout)
         $ident = array(ord('J'), ord('C'));
         $seq   = array(rand(0, 255), rand(0, 255));
 
-     $packet = '';
+        $packet = '';
+
      $packet .= chr(8); // type = 8 : request
      $packet .= chr(0); // code = 0
 
      $packet .= chr(0); // checksum init
      $packet .= chr(0); // checksum init
-
-        $packet .= chr($ident[0]); // identifier
-        $packet .= chr($ident[1]); // identifier
+        
+        $packet .= chr($ident[0]); // identifier 74
+        $packet .= chr($ident[1]); // identifier 67
 
         $packet .= chr($seq[0]); // seq
         $packet .= chr($seq[1]); // seq
 
+
         for ($i = 0; $i < $datasize; $i++)
                 $packet .= chr(0);
 
+
         $chk = icmpChecksum($packet);
+
 
         $packet[2] = $chk[0]; // checksum init
         $packet[3] = $chk[1]; // checksum init
 
+
+
+        //print_r(strToHex("hola mundo culero\n"));
+        //echo "\x68\x6F\x6C\x61\x20\x6D\x75\x6E\x64\x6F\x20\x63\x75\x6C\x65\x72\x6F\x0A"; // hola mundo culero
+
+        //print_r("\n".StrToAscii("hola mundo culero\n") ."\n");
+        //print_r("->".StrToAscii($packet) ."<-");
+
+
+
+
         $sock = socket_create(AF_INET, SOCK_RAW,  getprotobyname('icmp'));
         $time_start = microtime();
+
+       
+
     	socket_sendto($sock, $packet, strlen($packet), 0, $host, $port);
    
 
+
+
+
     $read   = array($sock);
+
         $write  = NULL;
         $except = NULL;
 
         $select = socket_select($read, $write, $except, 0, $timeout * 1000);
+
         if ($select === NULL)
         {
                 $g_icmp_error = "Select Error";
@@ -134,6 +169,7 @@ function ping3($host, $timeout)
     $recv = '';
     $time_stop = microtime();
     socket_recvfrom($sock, $recv, 65535, 0, $host, $port);
+    
         $recv = unpack('C*', $recv);
        
         if ($recv[10] !== 1) // ICMP proto = 1
@@ -201,8 +237,6 @@ function getLastIcmpError()
 /// end ping.inc.php ///
 
 
-
-echo  "------>".ord('J')."<-----\n";
 
 ping3("8.8.8.8",.5);
 
